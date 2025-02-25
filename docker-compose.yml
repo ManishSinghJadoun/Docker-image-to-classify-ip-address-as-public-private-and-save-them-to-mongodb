@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+
+  ip_processor:
+    build: .
+    container_name: ip_processor
+    depends_on:
+      - mongo
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  mongo_data:
